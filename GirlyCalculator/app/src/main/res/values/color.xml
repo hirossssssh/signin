@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="pastel_pink">#FDD7E4</color>
+    <color name="light_pink">#F8BBD0</color>
+    <color name="dark_background">#212121</color>
+    <color name="dark_display_background">#303030</color>
+    <color name="dark_display_text">#FFFFFF</color>
+    <color name="dark_button_background">#424242</color>
+    <color name="dark_button_text">#FFFFFF</color>
+</resources>
