@@ -14,7 +14,6 @@
             height: 100vh;
             display: flex;
             overflow: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
         }
 
         #sidebar {
@@ -24,7 +23,6 @@
             height: 100vh;
             position: fixed;
             overflow-y: auto;
-            z-index: 10;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -40,7 +38,6 @@
             color: #ffffff;
             border-radius: 6px;
             margin: 5px 0;
-            background: transparent;
             transition: all 0.3s ease;
             font-size: 16px;
         }
@@ -60,12 +57,10 @@
                 padding: 0;
                 overflow: hidden;
             }
-
             #sidebar.open {
                 width: 240px;
                 padding: 16px;
             }
-
             #hamburger {
                 display: block !important;
             }
@@ -77,14 +72,20 @@
             padding: 30px;
             overflow-y: auto;
             flex: 1;
-            transition: background 0.3s ease;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(to bottom, #6900a7, #000000 250px);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 600;
         }
 
         h2 {
             font-size: 20px;
-            margin-bottom: 15px;
+            margin: 20px 0 15px;
         }
 
         .song-card {
@@ -92,8 +93,7 @@
             padding: 10px;
             border-radius: 10px;
             cursor: pointer;
-            position: relative;
-            margin-bottom: 10px;
+            margin-right: 15px;
             transition: background 0.3s ease;
             width: 150px;
         }
@@ -129,39 +129,11 @@
             right: 0;
             overflow-y: auto;
             z-index: 1;
-            transition: width 0.3s ease, background 0.3s ease;
+            transition: width 0.3s ease;
         }
 
         .right-sidebar:hover {
             width: 310px;
-        }
-
-        .chill-lounge {
-            background: #6a0dad;
-            padding: 8px 16px;
-            border-radius: 20px;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .chill-lounge:hover {
-            background: #4b0082;
-        }
-
-        .queue-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #2a2a2a;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .queue-item:hover {
-            background: #6a0dad;
         }
 
         #music-player {
@@ -176,7 +148,6 @@
             justify-content: space-between;
             border-top: 1px solid #2a2a2a;
             z-index: 2;
-            transition: background 0.3s ease;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -193,7 +164,6 @@
             height: 60px;
             border-radius: 8px;
             object-fit: cover;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .player-info .info-text {
@@ -204,9 +174,7 @@
 
         .player-info .title {
             font-weight: bold;
-            color: #fff;
             font-size: 16px;
-            margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -252,7 +220,6 @@
 
         #progress {
             width: 300px;
-          
             height: 4px;
             background: #535353;
             border-radius: 2px;
@@ -261,17 +228,11 @@
         }
 
         #progress::-webkit-slider-thumb {
-           
+            -webkit-appearance: none;
             width: 12px;
             height: 12px;
             background: #6a0dad;
             border-radius: 50%;
-        }
-
-        .extra-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .volume-container {
@@ -282,7 +243,6 @@
 
         #volume {
             width: 100px;
-           
             height: 4px;
             background: #535353;
             border-radius: 2px;
@@ -298,83 +258,39 @@
             border-radius: 50%;
         }
 
-        #visualizer {
-            height: 60px;
-            width: 100px;
-            margin-left: 20px;
-            display: none;
-        }
-
         .active-btn {
             color: #6a0dad;
         }
     </style>
 </head>
-<body id="body">
+<body>
     <div id="sidebar">
-        <div style="font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
+        <div style="font-size: 28px; font-weight: bold; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between;">
             StreamVibe
             <span id="hamburger" onclick="toggleSidebar()" style="cursor: pointer; display: none; font-size: 24px;">☰</span>
         </div>
         <nav style="flex: 1;">
-            <a href="#home" class="nav-item active"><span>🏠</span> Home</a>
-            <a href="#search" class="nav-item"><span>🔍</span> Search</a>
-            <a href="#library" class="nav-item"><span>📚</span> Your Library</a>
-            <div style="margin-top: 30px;">
-                <div onclick="togglePlaylists()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: #b3b3b3; font-size: 14px; margin-bottom: 10px;">
-                    <span>PLAYLISTS</span>
-                    <span id="toggle-icon" style="transition: transform 0.3s ease;">▼</span>
-                </div>
-                <div id="playlist-items" style="transition: max-height 0.3s ease; overflow: hidden; max-height: 500px;">
-                    <a href="#liked-songs" class="nav-item">❤️ Liked Songs</a>
-                    <a href="#discover-weekly" class="nav-item">🌟 Discover Weekly</a>
-                    <a href="#viral-hits" class="nav-item">🔥 Viral Hits</a>
-                    <a href="#gaming-tracks" class="nav-item">🎮 Top Gaming Tracks</a>
-                    <a href="#deep-focus" class="nav-item">🧘 Deep Focus</a>
-                </div>
-            </div>
+            <a href="#" class="nav-item active"><span>🏠</span> Home</a>
+            <a href="#" class="nav-item"><span>🔍</span> Search</a>
+            <a href="#" class="nav-item"><span>📚</span> Your Library</a>
         </nav>
     </div>
 
-    <div class="main-content" style="background: linear-gradient(to bottom, #6900a7, #000000 250px);">
-        <h1 style="margin: 0; font-size: 32px; color: #fff; font-weight: 600;">Stream Good Music</h1>
-        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
-            <div style="background: #2a2a2a; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; transition: all 0.3s ease;" onmouseover="this.style.background='#6a0dad';" onmouseout="this.style.background='#2a2a2a';">
-                <img src="discover-weekly.jpg" style="width: 60px; height: 60px; border-radius: 5px; margin-right: 10px;">
-                <div>
-                    <div style="font-weight: bold;">Discover Weekly</div>
-                    <div style="font-size: 14px; color: #b3b3b3;">Your weekly mixtape</div>
-                </div>
-            </div>
-            <div style="background: #2a2a2a; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; transition: all 0.3s ease;" onmouseover="this.style.background='#6a0dad';" onmouseout="this.style.background='#2a2a2a';">
-                <img src="good-vibes.jfif" style="width: 60px; height: 60px; border-radius: 5px; margin-right: 10px;">
-                <div>
-                    <div style="font-weight: bold;">Good Vibes</div>
-                    <div style="font-size: 14px; color: #b3b3b3;">Feel-good tracks</div>
-                </div>
-            </div>
-            <div style="background: #2a2a2a; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; transition: all 0.3s ease;" onmouseover="this.style.background='#6a0dad';" onmouseout="this.style.background='#2a2a2a';">
-                <img src="jump-back.jfif" style="width: 60px; height: 60px; border-radius: 5px; margin-right: 10px;">
-                <div>
-                    <div style="font-weight: bold;">Jump Back In</div>
-                    <div style="font-size: 14px; color: #b3b3b3;">Your recent favorites</div>
-                </div>
-            </div>
-        </div>
-
+    <div class="main-content">
+        <h1>Stream Good Music</h1>
         <h2>Recently Played</h2>
         <div style="display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px;">
-            <div class="song-card" onclick="playSong('Fearless', 'Taylor Swift', 'fearless_taylors_version_album.jpg', 'fearless.mp3')">
+            <div class="song-card" onclick="playSong(0)">
                 <img src="fearless_taylors_version_album.jpg">
                 <div class="title">Fearless</div>
                 <div class="artist">Taylor Swift</div>
             </div>
-            <div class="song-card" onclick="playSong('Nothing', 'Bruno Major', 'nothing.jfif', 'nothing.mp3')">
+            <div class="song-card" onclick="playSong(1)">
                 <img src="nothing.jfif">
                 <div class="title">Nothing</div>
                 <div class="artist">Bruno Major</div>
             </div>
-            <div class="song-card" onclick="playSong('Apocalypse', 'Cigarettes After Sex', 'apo.jfif', 'Apocalypse.mp3')">
+            <div class="song-card" onclick="playSong(2)">
                 <img src="apo.jfif">
                 <div class="title">Apocalypse</div>
                 <div class="artist">Cigarettes After Sex</div>
@@ -383,31 +299,9 @@
     </div>
 
     <div class="right-sidebar">
-        <h2 style="font-size: 20px; margin-bottom: 15px;">Chill Lounge</h2>
-        <img src="https://via.placeholder.com/260x150" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
-        <div style="font-size: 14px; color: #b3b3b3; margin-bottom: 15px;">Relax with these soothing tracks</div>
-        <div class="chill-lounge">
-            Play
-        </div>
-        <div style="font-size: 14px; color: #b3b3b3; cursor: pointer;">Follow</div>
-
-        <h2>Recently Played</h2>
-        <div style="display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px;">
-            <div class="song-card" onclick="playSong('Fearless', 'Taylor Swift', 'https://upload.wikimedia.org/wikipedia/en/8/86/Taylor_Swift_-_Fearless.png', 'fearless.mp3')">
-                <img src="https://upload.wikimedia.org/wikipedia/en/8/86/Taylor_Swift_-_Fearless.png">
-                <div class="title">Fearless</div>
-                <div class="artist">Taylor Swift</div>
-            </div>
-            <div class="song-card" onclick="playSong('Song 2', 'Artist 2', 'https://via.placeholder.com/150', 'song2.mp3')">
-                <img src="https://via.placeholder.com/150">
-                <div class="title">Song 2</div>
-                <div class="artist">Artist 2</div>
-            </div>
-            <div class="song-card" onclick="playSong('Song 3', 'Artist 3', 'https://via.placeholder.com/150', 'song3.mp3')">
-                <img src="https://via.placeholder.com/150">
-                <div class="title">Song 3</div>
-                <div class="artist">Artist 3</div>
-            </div>
+        <h2 style="font-size: 20px; margin: 15px 0;">Queue</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px; padding-bottom: 10px;" id="queue-list">
+            <!-- Queue will be dynamically updated -->
         </div>
     </div>
 
@@ -421,39 +315,27 @@
         </div>
 
         <div class="player-controls">
-            <button onclick="toggleShuffle()" id="shuffle-btn">🔀</button>
+            <button id="shuffle-btn" onclick="toggleShuffle()">🔀</button>
             <button onclick="playPrevious()">⏮</button>
             <button id="play-pause-btn" onclick="togglePlay()">▶️</button>
             <button onclick="playNext()">⏭</button>
-            <button onclick="toggleRepeat()" id="repeat-btn">🔁</button>
+            <button id="repeat-btn" onclick="toggleRepeat()">🔁</button>
         </div>
 
         <div class="progress-container">
             <span id="current-time">0:00</span>
-            <input type="range" id="progress" value="0" min="0" max="100">
+            <input type="range" id="progress" value="0" min="0">
             <span id="total-time">0:00</span>
-            <div class="extra-controls">
-                <div class="volume-container">
-                    <button onclick="toggleMute()" id="volume-btn">🔊</button>
-                    <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-                </div>
-                <button onclick="toggleVisualizer()" id="visualizer-btn">📊</button>
+            <div class="volume-container">
+                <button id="volume-btn" onclick="toggleMute()">🔊</button>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
             </div>
-            <canvas id="visualizer"></canvas>
         </div>
 
         <audio id="audio" style="display: none;"></audio>
     </div>
 
     <script>
-        const songQueue = [
-            { title: 'Fearless', artist: 'Taylor Swift', image: 'https://upload.wikimedia.org/wikipedia/en/8/86/Taylor_Swift_-_Fearless.png', audio: 'fearless.mp3' },
-            { title: 'Song 2', artist: 'Artist 2', image: 'nothing.jfif', audio: 'nothing.mp3' },
-            { title: 'Song 3', artist: 'Artist 3', image: 'https://via.placeholder.com/150', audio: 'song3.mp3' }
-        ];
-
-        let currentSongIndex = 0;
-        let isPlaying = false;
         const audio = document.getElementById('audio');
         const playPauseBtn = document.getElementById('play-pause-btn');
         const progress = document.getElementById('progress');
@@ -462,145 +344,167 @@
         const playerImg = document.getElementById('player-img');
         const playerTitle = document.getElementById('player-title');
         const playerArtist = document.getElementById('player-artist');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        const repeatBtn = document.getElementById('repeat-btn');
+        const volumeBtn = document.getElementById('volume-btn');
+        const volume = document.getElementById('volume');
+        const queueList = document.getElementById('queue-list');
 
-        function playSong(title, artist, imageSrc, audioSrc) {
-    console.log('Playing song:', { title, artist, imageSrc, audioSrc });
-    
-    // Load and play the audio
-    audio.src = audioSrc;
-    audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-    });
-    
-    // Update music player info
-    playerImg.src = imageSrc; // Update the image
-    playerTitle.textContent = title; // Update the title
-    playerArtist.textContent = artist; // Update the artist
-    
-    isPlaying = true;
-    playPauseBtn.textContent = '⏸'; // Update play button
+        const songQueue = [
+            { title: 'Fearless', artist: 'Taylor Swift', image: 'fearless_taylors_version_album.jpg', audio: 'fearless.mp3' },
+            { title: 'Nothing', artist: 'Bruno Major', image: 'nothing.jfif', audio: 'nothing.mp3' },
+            { title: 'Apocalypse', artist: 'Cigarettes After Sex', image: 'apo.jfif', audio: 'apocalypse.mp3' }
+        ];
 
-    // Reset progress bar
-    progress.value = 0;
-    currentTimeDisplay.textContent = '0:00';
-    totalTimeDisplay.textContent = '0:00';
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffling = false;
+        let isRepeating = false;
+        let isMuted = false;
+        let previousVolume = 1;
 
-    // Update progress bar and time display as the song plays
-    audio.addEventListener('timeupdate', updateProgress);
-    audio.addEventListener('loadedmetadata', () => {
-        progress.max = audio.duration;
-        updateTimeDisplay(0, audio.duration);
-    });
+        function playSong(index) {
+            currentSongIndex = index;
+            const song = songQueue[currentSongIndex];
+            playerTitle.textContent = song.title;
+            playerArtist.textContent = song.artist;
+            playerImg.src = song.image;
+            audio.src = song.audio;
+            
+            audio.play()
+                .then(() => {
+                    isPlaying = true;
+                    playPauseBtn.textContent = '⏸';
+                    updateQueueDisplay();
+                })
+                .catch(error => {
+                    console.error('Error playing audio:', error);
+                    alert('Error: Ensure audio files are in the correct folder and served via a web server');
+                });
 
-    // Play next song when current song ends
-    audio.onended = function() {
-        playNext();
-    };
-}
+            audio.onloadedmetadata = () => {
+                progress.max = audio.duration;
+                totalTimeDisplay.textContent = formatTime(audio.duration);
+            };
+
+            audio.ontimeupdate = () => {
+                progress.value = audio.currentTime;
+                currentTimeDisplay.textContent = formatTime(audio.currentTime);
+            };
+
+            audio.onended = () => {
+                if (isRepeating) {
+                    playSong(currentSongIndex);
+                } else {
+                    playNext();
+                }
+            };
+
+            progress.oninput = () => {
+                audio.currentTime = progress.value;
+            };
+        }
 
         function togglePlay() {
             if (isPlaying) {
                 audio.pause();
                 playPauseBtn.textContent = '▶️';
+                isPlaying = false;
             } else {
-                audio.play().catch(error => {
-                    console.error('Error playing audio:', error);
-                });
-                playPauseBtn.textContent = '⏸';
+                audio.play()
+                    .then(() => {
+                        playPauseBtn.textContent = '⏸';
+                        isPlaying = true;
+                    })
+                    .catch(error => console.error('Error:', error));
             }
-            isPlaying = !isPlaying;
         }
 
         function playNext() {
-            currentSongIndex = (currentSongIndex + 1) % songQueue.length;
-            const nextSong = songQueue[currentSongIndex];
-            playSong(nextSong.title, nextSong.artist, nextSong.image, nextSong.audio);
+            if (isShuffling) {
+                currentSongIndex = Math.floor(Math.random() * songQueue.length);
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % songQueue.length;
+            }
+            playSong(currentSongIndex);
         }
 
         function playPrevious() {
-            currentSongIndex = (currentSongIndex - 1 + songQueue.length) % songQueue.length;
-            const prevSong = songQueue[currentSongIndex];
-            playSong(prevSong.title, prevSong.artist, prevSong.image, prevSong.audio);
-        }
-
-        function updateProgress() {
-            progress.value = audio.currentTime;
-            updateTimeDisplay(audio.currentTime, audio.duration);
-        }
-
-        function updateTimeDisplay(currentTime, duration) {
-            const currentMinutes = Math.floor(currentTime / 60);
-            const currentSeconds = Math.floor(currentTime % 60);
-            const durationMinutes = Math.floor(duration / 60);
-            const durationSeconds = Math.floor(duration % 60);
-            currentTimeDisplay.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
-            totalTimeDisplay.textContent = `${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
-        }
-
-        progress.addEventListener('input', () => {
-            audio.currentTime = progress.value;
-            updateTimeDisplay(audio.currentTime, audio.duration);
-        });
-
-        // Initial play
-        playSong(songQueue[currentSongIndex].title, songQueue[currentSongIndex].artist, songQueue[currentSongIndex].image, songQueue[currentSongIndex].audio);
-
-        function togglePlaylists() {
-            const playlists = document.getElementById('playlist-items');
-            const toggleIcon = document.getElementById('toggle-icon');const playerImg = document.getElementById('playerImg');
-const playerTitle = document.getElementById('playerTitle');
-const playerArtist = document.getElementById('playerArtist');
-const playPauseBtn = document.getElementById('playPauseBtn');
-const progress = document.getElementById('progress');
-const currentTimeDisplay = document.getElementById('currentTime');
-const totalTimeDisplay = document.getElementById('totalTime');
-const audio = new Audio();
-let isPlaying = false;
-let currentSongIndex = 0;
-
-            if (playlists.style.maxHeight === '0px') {
-                playlists.style.maxHeight = '500px';
-                toggleIcon.style.transform = 'rotate(0deg)';
+            if (isShuffling) {
+                currentSongIndex = Math.floor(Math.random() * songQueue.length);
             } else {
-                playlists.style.maxHeight = '0px';
-                toggleIcon.style.transform = 'rotate(-90deg)';
+                currentSongIndex = (currentSongIndex - 1 + songQueue.length) % songQueue.length;
             }
+            playSong(currentSongIndex);
+        }
+
+        function toggleShuffle() {
+            isShuffling = !isShuffling;
+            shuffleBtn.classList.toggle('active-btn');
+        }
+
+        function toggleRepeat() {
+            isRepeating = !isRepeating;
+            repeatBtn.classList.toggle('active-btn');
+        }
+
+        function toggleMute() {
+            if (isMuted) {
+                audio.volume = previousVolume;
+                volume.value = previousVolume;
+                volumeBtn.textContent = '🔊';
+            } else {
+                previousVolume = audio.volume;
+                audio.volume = 0;
+                volume.value = 0;
+                volumeBtn.textContent = '🔇';
+            }
+            isMuted = !isMuted;
+        }
+
+        volume.oninput = () => {
+            audio.volume = volume.value;
+            if (audio.volume === 0) {
+                volumeBtn.textContent = '🔇';
+                isMuted = true;
+            } else {
+                volumeBtn.textContent = '🔊';
+                isMuted = false;
+                previousVolume = audio.volume;
+            }
+        };
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function updateQueueDisplay() {
+            queueList.innerHTML = '';
+            songQueue.forEach((song, index) => {
+                const card = document.createElement('div');
+                card.className = 'song-card';
+                card.onclick = () => playSong(index);
+                card.innerHTML = `
+                    <img src="${song.image}">
+                    <div class="title">${song.title}</div>
+                    <div class="artist">${song.artist}</div>
+                `;
+                if (index === currentSongIndex) {
+                    card.style.background = '#6a0dad';
+                }
+                queueList.appendChild(card);
+            });
         }
 
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
+            document.getElementById('sidebar').classList.toggle('open');
         }
 
-        let isDarkMode = true;
-
-        function toggleTheme() {
-            const body = document.getElementById('body');
-            const sidebarLeft = document.getElementById('sidebar');
-            const sidebarRight = document.querySelector('.right-sidebar');
-            const musicPlayer = document.getElementById('music-player');
-
-            if (isDarkMode) {
-                body.style.background = '#f5f5f5';
-                body.style.color = '#000';
-                sidebarLeft.style.background = '#a3bffa';
-                sidebarRight.style.background = '#a3bffa';
-                musicPlayer.style.background = '#a3bffa';
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    item.style.color = '#000';
-                });
-            } else {
-                body.style.background = '#000000';
-                body.style.color = '#fff';
-                sidebarLeft.style.background = '#1d1d1d';
-                sidebarRight.style.background = '#1d1d1d';
-                musicPlayer.style.background = '#1a1a1a';
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    item.style.color = '#ffffff';
-                });
-            }
-            isDarkMode = !isDarkMode;
-        }
+        // Initial play
+        playSong(currentSongIndex);
     </script>
 </body>
 </html>
